@@ -7,8 +7,15 @@
  * and user choices. Supports Node.js, Python, React, and React Native apps.
  *
  * Usage:
- *   node scripts/add-app.js
- *   pnpm projects:add
+ *   Interactive: node scripts/add-app.js
+ *   CLI Args: node scripts/add-app.js --type=nodejs --name=api --framework=express --port=3000 --typescript=yes
+ *
+ *   Arguments:
+ *     --type=nodejs|python
+ *     --name=app-name (kebab-case)
+ *     --framework=express|fastify|hono|flask|fastapi
+ *     --port=3000
+ *     --typescript=yes|no
  */
 
 import fs from 'fs/promises';
@@ -20,6 +27,20 @@ import { execSync } from 'child_process';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
+
+// Parse CLI arguments
+function parseArgs() {
+  const args = {};
+  process.argv.slice(2).forEach(arg => {
+    if (arg.startsWith('--')) {
+      const [key, value] = arg.substring(2).split('=');
+      args[key] = value;
+    }
+  });
+  return args;
+}
+
+const cliArgs = parseArgs();
 
 // ANSI colors for terminal output
 const colors = {
@@ -647,7 +668,7 @@ async function main() {
         'This ensures new apps follow your project conventions.',
         'reset'
       );
-      rl.close();
+      if (rl) rl.close();
       process.exit(1);
     }
 
@@ -656,31 +677,71 @@ async function main() {
     // Get existing apps
     const existingApps = await getExistingApps();
 
-    // Prompt for app type
-    const appType = await promptAppType();
+    // Check for CLI args mode
+    const nonInteractive = cliArgs.type && cliArgs.name;
+    let appType, appName, details = {}, typeLabel = '';
 
-    // Prompt for app name
-    const appName = await promptAppName(existingApps);
+    if (nonInteractive) {
+      // Non-interactive mode using CLI args
+      log('Running in non-interactive mode', 'cyan');
+
+      appName = cliArgs.name;
+
+      // Validate app name
+      const validation = validateAppName(appName);
+      if (!validation.valid) {
+        log(`❌ ${validation.error}`, 'red');
+        process.exit(1);
+      }
+
+      if (existingApps.includes(appName)) {
+        log(`❌ App already exists: apps/${appName}`, 'red');
+        process.exit(1);
+      }
+
+      // Determine type and details from CLI args
+      if (cliArgs.type === 'nodejs') {
+        appType = 1;
+        details = {
+          framework: cliArgs.framework || 'express',
+          port: parseInt(cliArgs.port) || 3000,
+          typescript: cliArgs.typescript !== 'no',
+        };
+        typeLabel = `Node.js API (${details.framework})`;
+      } else if (cliArgs.type === 'python') {
+        appType = 2;
+        details = {
+          framework: cliArgs.framework || 'flask',
+          port: parseInt(cliArgs.port) || 8000,
+        };
+        typeLabel = `Python API (${details.framework})`;
+      } else {
+        log(`❌ Unsupported type: ${cliArgs.type}`, 'red');
+        log('Supported types: nodejs, python', 'yellow');
+        process.exit(1);
+      }
+    } else {
+      // Interactive mode
+      appType = await promptAppType();
+      appName = await promptAppName(existingApps);
+    }
 
     // Get app-specific details and scaffold
-    let details = {};
-    let typeLabel = '';
-
     switch (appType) {
       case 1: // Node.js API
-        details = await promptNodeJSDetails();
+        if (!nonInteractive) details = await promptNodeJSDetails();
         log('\n🏗️  Scaffolding Node.js API...', 'cyan');
         await scaffoldNodeAPI(appName, details);
         await updateRootPackageJson(appName, 'nodejs');
-        typeLabel = `Node.js API (${details.framework})`;
+        if (!nonInteractive) typeLabel = `Node.js API (${details.framework})`;
         break;
 
       case 2: // Python API
-        details = await promptPythonDetails();
+        if (!nonInteractive) details = await promptPythonDetails();
         log('\n🏗️  Scaffolding Python API...', 'cyan');
         await scaffoldPythonAPI(appName, details);
         await updateRootPackageJson(appName, 'python');
-        typeLabel = `Python API (${details.framework})`;
+        if (!nonInteractive) typeLabel = `Python API (${details.framework})`;
         break;
 
       case 3: // React Web
@@ -768,7 +829,7 @@ async function main() {
     log(`   - apps/${appName}/README.md`, 'reset');
     log('', 'reset');
 
-    rl.close();
+    if (rl && !nonInteractive) rl.close();
   } catch (error) {
     log('', 'reset');
     log('❌ Error adding app:', 'red');
@@ -776,7 +837,7 @@ async function main() {
     log('', 'reset');
     log('Stack trace:', 'yellow');
     console.error(error);
-    rl.close();
+    if (rl) rl.close();
     process.exit(1);
   }
 }

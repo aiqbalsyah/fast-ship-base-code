@@ -1,0 +1,12 @@
+# PNPM Workspace Configuration
+# This file defines the monorepo structure for your project
+
+packages:
+  # All applications
+  - 'apps/*'
+
+  # All shared packages
+  - 'packages/*'
+
+# Exclude build outputs and test directories
+# (these are automatically excluded by pnpm)

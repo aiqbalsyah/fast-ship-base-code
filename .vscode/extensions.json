@@ -1,0 +1,58 @@
+{
+  "recommendations": [
+    // Code quality & formatting
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+
+    // TypeScript & JavaScript
+    "ms-vscode.vscode-typescript-next",
+
+    // Python (if using Python apps)
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.black-formatter",
+
+    // Git
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+
+    // Markdown
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+
+    // YAML & JSON
+    "redhat.vscode-yaml",
+
+    // Docker (if using Docker)
+    "ms-azuretools.vscode-docker",
+
+    // REST API testing
+    "rangav.vscode-thunder-client",
+
+    // Monorepo tools
+    "arcanis.vscode-zipfs",
+
+    // Code navigation
+    "ms-vscode.vscode-typescript-next",
+    "christian-kohler.path-intellisense",
+
+    // Productivity
+    "usernamehw.errorlens",
+    "wayou.vscode-todo-highlight",
+    "aaron-bond.better-comments",
+
+    // React & React Native (if using)
+    "dsznajder.es7-react-js-snippets",
+    "msjsdiag.vscode-react-native",
+
+    // Tailwind CSS (if using)
+    "bradlc.vscode-tailwindcss",
+
+    // Database tools (optional)
+    "cweijan.vscode-database-client2",
+
+    // AI assistance
+    "anthropics.claude-code"
+  ],
+  "unwantedRecommendations": []
+}

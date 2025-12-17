@@ -49,13 +49,23 @@ Files in `docs/project-guides/` are **final user documentation**. Only update if
 - Adding new features to the template itself
 - User requests changes
 
-### 3. EXAMPLE Files Are Templates
+### 3. Monorepo Deployment Requirements
+**CRITICAL:** When working on deployment stories:
+- ✅ **ALWAYS** research monorepo deployment patterns (web search required)
+- ✅ **ALWAYS** reference `docs/project-guides/04-monorepo-deployment.md`
+- ✅ Use workspace filtering: `pnpm --filter [app-name]`
+- ✅ Build packages before apps
+- ✅ Consider Docker multi-stage builds
+- ✅ Research platform-specific monorepo support (Vercel, Firebase, Railway, etc.)
+- ✅ Web search: "monorepo deployment [platform] 2025"
+
+### 4. EXAMPLE Files Are Templates
 Files prefixed with `EXAMPLE-` in `docs/project-materials/` are:
 - Placeholders that show users what to provide
 - NOT to be filled with real content
 - Clearly marked as examples to delete
 
-### 4. Follow Existing Conventions
+### 5. Follow Existing Conventions
 - File names: kebab-case (enforced in conventions guide)
 - Code style: See `.prettierrc` and `.eslintrc.json`
 - Documentation: Markdown with clear structure
@@ -69,6 +79,7 @@ Files prefixed with `EXAMPLE-` in `docs/project-materials/` are:
 - `docs/project-guides/01-monorepo-conventions.md` - Naming, structure
 - `docs/project-guides/02-adding-apps.md` - App scaffolding guide
 - `docs/project-guides/03-bmad-workflows.md` - BMAD integration
+- `docs/project-guides/04-monorepo-deployment.md` - **CRITICAL for deployment stories**
 
 ### Template Maintenance
 - `README.md` - Main template description

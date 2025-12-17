@@ -122,9 +122,14 @@ Continuing with limited context...
     - Contains "screen", "navigation", "mobile" → Mobile story
     - Contains "database", "schema", "migration" → Database story
     - Contains "auth", "login", "register" → Authentication story
-    - Contains "deployment", "CI/CD", "infrastructure" → DevOps story
+    - Contains "deployment", "CI/CD", "infrastructure", "hosting", "docker" → DevOps/Deployment story
     - Other keywords → Determine from context
   </action>
+
+  <check if="story_type == DevOps/Deployment">
+    <action>Set {{requires_monorepo_research}} = true</action>
+    <output>📦 **Deployment story detected** - Will research monorepo deployment best practices</output>
+  </check>
 
   <action>Store as:
     - {{story_scope}} - App-specific, package, or project-level
@@ -141,8 +146,37 @@ Continuing with limited context...
 
 <step n="4" goal="Web search for latest versions and best practices">
   <critical>Use WebSearch to find latest stable versions of relevant technologies</critical>
+  <critical>For deployment stories, ALWAYS research monorepo deployment patterns</critical>
 
   <action>Based on {{story_type}} and {{project_tech_stack}}, identify technologies that need version lookups</action>
+
+  <check if="{{requires_monorepo_research}} == true">
+    <action>Perform monorepo deployment research:
+      - Search: "monorepo deployment best practices 2025"
+      - Search: "deploying [specific platform] monorepo 2025" (e.g., Vercel, Firebase, AWS)
+      - Search: "monorepo Docker deployment strategies 2025"
+      - Search: "monorepo CI/CD patterns 2025"
+      - Search: "pnpm monorepo deployment 2025"
+    </action>
+
+    <action>Extract key findings:
+      - Workspace filtering strategies (e.g., pnpm --filter)
+      - Build optimization techniques
+      - Shared dependency management
+      - Multi-app deployment patterns
+      - Environment variable management
+      - Docker multi-stage builds for monorepos
+      - Turborepo or Nx usage (if applicable)
+    </action>
+
+    <output>🔍 **Monorepo Deployment Research Complete**
+
+Key patterns identified:
+- Workspace filtering: {{workspace_filtering}}
+- Build strategy: {{build_strategy}}
+- Deployment approach: {{deployment_approach}}
+    </output>
+  </check>
 
   <action>For each relevant technology, perform web search:
     - Search query: "[Technology] latest stable version 2025"
@@ -265,6 +299,16 @@ Continuing with limited context...
     - Input validation
     - Data sanitization
     - Security best practices
+
+    **Monorepo Deployment Considerations** (if deployment story):
+    - Workspace filtering commands (pnpm --filter [app-name])
+    - Build dependencies and order
+    - Shared packages compilation
+    - Environment variables per app
+    - Docker multi-stage builds
+    - Deployment platform specifics
+    - CI/CD pipeline configuration
+    - Reference monorepo deployment research findings
 
     ### Implementation Checklist
 

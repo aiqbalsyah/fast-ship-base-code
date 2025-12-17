@@ -370,6 +370,42 @@ See the EXAMPLE files for guidance.
 ### Backup & Disaster Recovery
 [Data backup, disaster recovery plan]
 
+### Monorepo Deployment Considerations
+
+**CRITICAL:** This project uses a PNPM monorepo structure. Deployment requires special handling.
+
+#### Key Principles
+- **Workspace Filtering:** Use `pnpm --filter [app-name]` for targeted builds
+- **Build Order:** Always build packages before apps that depend on them
+- **Independent Deploys:** Each app can deploy independently
+
+#### Deployment Commands
+```bash
+# Build specific app and its dependencies
+pnpm --filter [app-name] build
+
+# Build all packages first
+pnpm --filter "./packages/**" build
+
+# Install production dependencies only
+pnpm --filter [app-name] --prod install
+```
+
+#### Platform-Specific Research
+When deploying, **ALWAYS research:**
+- "monorepo deployment [platform] 2025" (e.g., Vercel, Firebase, Railway)
+- Platform's official monorepo documentation
+- Docker multi-stage builds (if using containers)
+- CI/CD path filtering for monorepos
+
+#### Deployment Checklist
+- [ ] Build shared packages first
+- [ ] Build target app with workspace filtering
+- [ ] Configure platform for monorepo (root directory, build command)
+- [ ] Set environment variables per app
+- [ ] Test locally before deploying
+- [ ] Review `docs/project-guides/04-monorepo-deployment.md`
+
 ---
 
 ## Development Workflow

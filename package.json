@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "projects:init": "node scripts/init-project.js",
+    "projects:init": "echo '\n🚀 Initialize your project in Claude Code:\n\n   /bmad:bmm:workflows:init-project\n\nThis will:\n- Set your project name\n- Analyze your documentation\n- Generate project-context.md\n'",
     "projects:add": "node scripts/add-app.js",
     "create:story": "node scripts/create-story.js",
     "install:all": "pnpm install",

@@ -57,16 +57,20 @@ docs/project-materials/
 
 ```bash
 pnpm install
-pnpm projects:init
+pnpm projects:init  # Shows the command to run
 ```
 
-This validates your documentation exists, then directs you to run:
+Then in **Claude Code**, run:
 
 ```bash
 /bmad:bmm:workflows:init-project
 ```
 
 The AI will:
+- **Set your project name** (auto-detects from package.json or asks you)
+- **Update project files:**
+  - `.bmad/bmm/config.yaml` (BMAD configuration)
+  - `package.json` (project metadata, if needed)
 - Read YOUR documentation with deep comprehension
 - Analyze YOUR domain, tech stack, and architecture
 - Generate comprehensive `docs/project-context.md` (the "bible" for all future AI work)

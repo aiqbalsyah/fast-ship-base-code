@@ -92,9 +92,9 @@ Files prefixed with `EXAMPLE-` in `docs/project-materials/` are:
 
 ### Project Management
 ```bash
-pnpm projects:init     # ✅ Validate docs → direct to BMAD workflow
-pnpm projects:add      # ✅ Create story file for new app
-pnpm create:story      # ✅ Manual BMAD story creation
+pnpm projects:init     # Shows init command to run in Claude Code
+pnpm projects:add      # Create story file for new app
+pnpm create:story      # Manual BMAD story creation
 ```
 
 ### BMAD Workflows
@@ -154,10 +154,12 @@ The `.bmad/` folder contains:
 This template uses **AI-powered documentation analysis** instead of simple keyword matching:
 
 1. **Add Documentation** (`docs/project-materials/`): Add PRD, architecture, design docs
-2. **Validate** (`pnpm projects:init`): Checks docs exist and directs to workflow
-3. **Analyze** (`/bmad:bmm:workflows:init-project`): AI analyzes docs and generates project-context.md
+2. **Initialize** (`/bmad:bmm:workflows:init-project`):
+   - Sets project name (auto-detects from package.json or asks user)
+   - Updates `.bmad/bmm/config.yaml` and `package.json` with project name
+   - AI analyzes docs and generates project-context.md
 
-**Why AI analysis?** Deep comprehension of requirements, intelligent domain extraction, comprehensive context generation.
+**Why AI analysis?** Deep comprehension of requirements, intelligent domain extraction, comprehensive context generation, automatic project configuration.
 
 ### Story-Driven App Creation
 This template uses a **3-step story-driven workflow** with BMAD agent intelligence:
@@ -279,8 +281,7 @@ This template follows these principles:
 
 **If they want to initialize the project:**
 1. Have them add documentation to `docs/project-materials/`
-2. Run `pnpm projects:init` to validate docs
-3. Run `/bmad:bmm:workflows:init-project` to generate project-context.md
+2. Run `/bmad:bmm:workflows:init-project` to generate project-context.md
 
 **If they want to add an app:**
 1. Run `pnpm projects:add` to create story

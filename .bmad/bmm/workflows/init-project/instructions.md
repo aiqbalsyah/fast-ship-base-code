@@ -7,7 +7,63 @@
 
 <workflow>
 
-<step n="1" goal="Validate project materials exist">
+<step n="1" goal="Set project name and update BMAD config">
+  <critical>Update BMAD config with actual project name before analyzing documentation</critical>
+
+  <action>Read {project-root}/package.json to extract project name if available</action>
+  <action>Store as {{package_name}}</action>
+
+  <check if="package_name exists and package_name != 'fast-ship-base-code'">
+    <action>Use {{package_name}} as the project name</action>
+    <output>📝 Detected project name from package.json: {{package_name}}</output>
+  </check>
+
+  <check if="package_name == 'fast-ship-base-code' OR package_name does not exist">
+    <ask>What is your project name?
+
+This will be used to identify your project in BMAD workflows and documentation.
+
+Examples:
+- my-saas-app
+- ecommerce-platform
+- iot-dashboard
+- mobile-fitness-app
+
+Project name:</ask>
+    <action>Store user input as {{project_name}}</action>
+  </check>
+
+  <check if="package_name exists and package_name != 'fast-ship-base-code'">
+    <action>Set {{project_name}} = {{package_name}}</action>
+  </check>
+
+  <action>Read {project-root}/.bmad/bmm/config.yaml</action>
+  <action>Update the project_name field with {{project_name}}</action>
+  <action>Write updated config back to {project-root}/.bmad/bmm/config.yaml</action>
+
+  <check if="package_name == 'fast-ship-base-code' OR package_name is empty">
+    <action>Read {project-root}/package.json</action>
+    <action>Update the name field with {{project_name}}</action>
+    <action>Write updated package.json back to {project-root}/package.json</action>
+    <output>✅ **Project name set:** {{project_name}}
+
+Updated:
+- .bmad/bmm/config.yaml
+- package.json
+    </output>
+  </check>
+
+  <check if="package_name exists and package_name != 'fast-ship-base-code'">
+    <output>✅ **Project name set:** {{project_name}}
+
+Updated:
+- .bmad/bmm/config.yaml
+- package.json (already configured)
+    </output>
+  </check>
+</step>
+
+<step n="2" goal="Validate project materials exist">
   <action>Check if directory exists: {project_materials}</action>
 
   <check if="project_materials directory does NOT exist">
@@ -54,7 +110,7 @@ See the EXAMPLE files for guidance.
   <output>✅ Found {{doc_files.length}} documentation file(s) to analyze</output>
 </step>
 
-<step n="2" goal="Read and categorize documentation">
+<step n="3" goal="Read and categorize documentation">
   <action>For each file in {{doc_files}}, read the complete contents</action>
   <action>Categorize each file based on its path:
     - Files in `requirements/` → Requirements category
@@ -81,7 +137,7 @@ See the EXAMPLE files for guidance.
   </output>
 </step>
 
-<step n="3" goal="Analyze requirements and extract domain">
+<step n="4" goal="Analyze requirements and extract domain">
   <critical>Use AI comprehension to deeply understand the project, don't just do keyword matching</critical>
 
   <action>Analyze all requirements documentation content</action>
@@ -114,7 +170,7 @@ See the EXAMPLE files for guidance.
   </check>
 </step>
 
-<step n="4" goal="Analyze architecture and extract tech stack">
+<step n="5" goal="Analyze architecture and extract tech stack">
   <critical>Use AI to understand the full technology landscape, including implied choices</critical>
 
   <action>Analyze all architecture documentation content</action>
@@ -148,7 +204,7 @@ See the EXAMPLE files for guidance.
   </check>
 </step>
 
-<step n="5" goal="Analyze design specifications">
+<step n="6" goal="Analyze design specifications">
   <action>Analyze all design documentation content</action>
   <action>Extract and identify:
     - **Design system**: Component library, design tokens
@@ -167,7 +223,7 @@ See the EXAMPLE files for guidance.
   </check>
 </step>
 
-<step n="6" goal="Analyze infrastructure and deployment">
+<step n="7" goal="Analyze infrastructure and deployment">
   <action>Analyze all infrastructure documentation content</action>
   <action>Extract and identify:
     - **Hosting**: Cloud provider, platform
@@ -186,7 +242,7 @@ See the EXAMPLE files for guidance.
   </check>
 </step>
 
-<step n="7" goal="Generate comprehensive project-context.md">
+<step n="8" goal="Generate comprehensive project-context.md">
   <critical>Generate a comprehensive, well-structured document that serves as the "bible" for all AI-assisted development</critical>
 
   <action>Create project-context.md with the following structure:
@@ -509,12 +565,18 @@ fast-ship-base-code/
   <output>✅ Generated comprehensive project-context.md at: docs/project-context.md</output>
 </step>
 
-<step n="8" goal="Validation and completion">
+<step n="9" goal="Validation and completion">
   <action>Verify that {output_file} was created successfully</action>
   <action>Check file size and ensure content was written</action>
 
   <output>
 ✅ **Project Initialization Complete, {user_name}!**
+
+**Project Configuration:**
+- **Project Name:** {{project_name}}
+- **Files Updated:**
+  - `.bmad/bmm/config.yaml` (BMAD configuration)
+  - `package.json` (project metadata)
 
 **Generated Documentation:**
 - **File:** `docs/project-context.md`

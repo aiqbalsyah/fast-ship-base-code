@@ -2,19 +2,19 @@
 
 > **Universal monorepo template with BMAD workflows for rapid AI-assisted development**
 
-A clean, domain-agnostic monorepo starter that works for ANY type of project. No pre-built features, no assumptions—just intelligent structure and automation.
+A clean, domain-agnostic monorepo starter that works for ANY type of project. No pre-built features, no assumptions—just intelligent structure and AI-powered automation.
 
 ---
 
 ## 🎯 What Is This?
 
-A **starting point** for building modern applications with:
+A **universal monorepo template** designed for rapid development:
 
-✅ **Domain-Agnostic** - Works for SaaS, e-commerce, fintech, IoT, gaming, internal tools—anything
-✅ **AI-Native** - Leverages BMAD workflows for intelligent scaffolding based on YOUR documentation
-✅ **Docs-First** - You provide requirements, AI generates project context and scaffolds accordingly
-✅ **Infrastructure Flexible** - Firebase, Docker, PostgreSQL, MongoDB, Kubernetes—you choose
-✅ **Fast to Ship** - Init once, add apps incrementally, deploy rapidly
+- **🌐 Domain-Agnostic** — Works for SaaS, e-commerce, fintech, IoT, gaming, internal tools—anything
+- **🤖 AI-Native** — Leverages BMAD workflows and Claude Code for intelligent app creation
+- **📝 Docs-First** — You provide requirements, AI generates context and implements features
+- **🔧 Infrastructure Flexible** — Firebase, Docker, PostgreSQL, MongoDB, Kubernetes—you choose
+- **🚀 Fast to Ship** — Story-driven development with latest versions automatically
 
 ---
 

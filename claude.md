@@ -19,7 +19,7 @@ fast-ship-base-code/
 ├── .bmad/                    # Full BMAD installation
 ├── .claude/                  # Claude Code configuration
 ├── .vscode/                  # VS Code workspace settings
-├── .github/workflows/        # CI/CD pipelines
+├── .github/                  # GitHub Copilot configuration
 ├── docs/
 │   ├── project-guides/       # User guides (DO NOT MODIFY)
 │   ├── project-materials/    # PLACEHOLDER examples (users replace)
@@ -27,9 +27,9 @@ fast-ship-base-code/
 ├── apps/                     # Empty (users add via projects:add)
 ├── packages/                 # Empty (users add as needed)
 └── scripts/
-    ├── create-story.js       # BMAD story creator
-    ├── init-project.js       # TODO: Project initialization
-    └── add-app.js            # TODO: App scaffolding
+    ├── create-story.js       # Manual BMAD story creator
+    ├── init-project.js       # ✅ Analyzes docs → project-context.md
+    └── add-app.js            # ✅ Creates story for new app
 ```
 
 ---
@@ -81,9 +81,21 @@ Files prefixed with `EXAMPLE-` in `docs/project-materials/` are:
 
 ### Project Management
 ```bash
-pnpm projects:init     # TODO: Not implemented yet
-pnpm projects:add      # TODO: Not implemented yet
-pnpm create:story      # ✅ Working - Creates BMAD stories
+pnpm projects:init     # ✅ Analyze docs → generate project-context.md
+pnpm projects:add      # ✅ Create story file for new app
+pnpm create:story      # ✅ Manual BMAD story creation
+```
+
+### Story-Driven Workflow (3 Steps)
+```bash
+# Step 1: Create story
+pnpm projects:add
+
+# Step 2: Fill story with latest versions (in Claude Code)
+/fill-story docs/stories/add-[app-name].md
+
+# Step 3: Implement app (in Claude Code)
+/bmad:bmm:workflows:dev-story docs/stories/add-[app-name].md
 ```
 
 ### Development
@@ -111,9 +123,14 @@ The `.bmad/` folder contains:
 - **CIS workflows**: design-thinking, problem-solving, storytelling
 - **18 specialized agents**: analyst, architect, dev, pm, etc.
 
-### Custom Workflows (TODO)
-- `projects-init` - Analyze docs, generate project-context.md
-- `projects-add` - Scaffold apps with intelligent defaults
+### Story-Driven App Creation
+This template uses a **3-step story-driven workflow** instead of direct scaffolding:
+
+1. **Create Story** (`pnpm projects:add`): Generates story file with requirements
+2. **Fill Story** (`/fill-story`): Claude web searches for latest versions, fills technical design
+3. **Implement** (`/dev-story`): Claude actually creates the app following the story
+
+**Why stories?** More flexible, uses latest versions automatically, adapts to project context better than static scaffolding.
 
 ---
 
@@ -125,12 +142,12 @@ The `.bmad/` folder contains:
 - **BMAD**: Installed and configured
 
 ### Tooling Included
-- **CI/CD**: GitHub Actions (`.github/workflows/ci.yml`)
 - **Code Quality**: ESLint + Prettier
 - **IDE**: VS Code settings (`.vscode/`)
 - **Monorepo**: PNPM workspaces
+- **GitHub**: Copilot configuration (`.github/`)
 
-### Supported App Types (via projects:add - TODO)
+### Supported App Types (via story-driven workflow)
 - Node.js API (Express, Fastify, Hono)
 - Python API (Flask, FastAPI)
 - React Web (Vite, Next.js, CRA)
@@ -221,13 +238,19 @@ This template follows these principles:
 
 **If they're using the template:**
 - Guide them to appropriate documentation
-- Help them understand BMAD workflows
-- Assist with `projects:init` and `projects:add` (once implemented)
+- Help them understand the 3-step story-driven workflow
+- Assist with `projects:init` (analyze docs) and `projects:add` (create story)
+- DO NOT scaffold apps directly — guide them through `/fill-story` → `/dev-story` workflow
 
-**If they're customizing the template:**
-- Support their domain-specific needs
-- Help scaffold their apps
-- Assist with BMAD story development
+**If they want to add an app:**
+1. Run `pnpm projects:add` to create story
+2. Run `/fill-story` to fill with latest versions
+3. Run `/dev-story` to implement
+
+**If they're customizing the template itself:**
+- Support improvements to scripts and workflows
+- Help maintain generic, domain-agnostic approach
+- Assist with documentation updates
 
 ---
 
@@ -252,6 +275,7 @@ Before committing changes to this template:
 
 ---
 
-**Last Updated:** 2025-12-16
+**Last Updated:** 2025-12-17
 **Template Version:** 1.0.0
 **BMAD Version:** 6.0.0-alpha.17
+**Workflow:** Story-driven (3-step: create → fill → implement)

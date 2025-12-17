@@ -60,10 +60,17 @@ pnpm install
 pnpm projects:init
 ```
 
+This validates your documentation exists, then directs you to run:
+
+```bash
+/bmad:bmm:workflows:init-project
+```
+
 The AI will:
-- Read YOUR documentation
-- Analyze YOUR domain and tech choices
-- Generate `docs/project-context.md` (the "bible" for all future AI work)
+- Read YOUR documentation with deep comprehension
+- Analyze YOUR domain, tech stack, and architecture
+- Generate comprehensive `docs/project-context.md` (the "bible" for all future AI work)
+- Provide intelligent recommendations based on your requirements
 
 ### 4. Add Your First App
 

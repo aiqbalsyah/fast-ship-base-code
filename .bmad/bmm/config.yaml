@@ -3,7 +3,7 @@
 # Version: 6.0.0-alpha.13
 # Date: 2025-12-02T07:40:22.413Z
 
-project_name: plek-app-eco-system
+project_name: fast-ship-project
 user_skill_level: expert
 sprint_artifacts: '{project-root}/docs/sprint'
 tea_use_mcp_enhancements: false

@@ -20,7 +20,7 @@
       <goto> anchor with id task_check</goto>
     </check>
 
-    <!-- Sprint-based story discovery (PLEK format: stories array with id, status, docs) -->
+    <!-- Sprint-based story discovery (Sprint status format: stories array with id, status, docs) -->
     <check if="{{sprint_status}} file exists">
       <critical>MUST read COMPLETE status.yaml file from start to end to preserve order</critical>
       <action>Load the FULL file: {{sprint_status}}</action>

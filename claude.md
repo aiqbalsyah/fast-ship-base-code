@@ -81,9 +81,24 @@ Files prefixed with `EXAMPLE-` in `docs/project-materials/` are:
 
 ### Project Management
 ```bash
-pnpm projects:init     # ✅ Analyze docs → generate project-context.md
+pnpm projects:init     # ✅ Validate docs → direct to BMAD workflow
 pnpm projects:add      # ✅ Create story file for new app
 pnpm create:story      # ✅ Manual BMAD story creation
+```
+
+### BMAD Workflows
+```bash
+# Initialize project (AI-powered analysis)
+/bmad:bmm:workflows:init-project
+
+# Add new app (story-based)
+pnpm projects:add
+
+# Develop story
+/bmad:bmm:workflows:dev-story docs/stories/[story-file].md
+
+# Code review
+/bmad:bmm:workflows:code-review
 ```
 
 ### Story-Driven Workflow (3 Steps)
@@ -122,6 +137,15 @@ The `.bmad/` folder contains:
 - **BMM workflows**: dev-story, code-review, create-epics-and-stories, etc.
 - **CIS workflows**: design-thinking, problem-solving, storytelling
 - **18 specialized agents**: analyst, architect, dev, pm, etc.
+
+### Project Initialization Workflow
+This template uses **AI-powered documentation analysis** instead of simple keyword matching:
+
+1. **Add Documentation** (`docs/project-materials/`): Add PRD, architecture, design docs
+2. **Validate** (`pnpm projects:init`): Checks docs exist and directs to workflow
+3. **Analyze** (`/bmad:bmm:workflows:init-project`): AI analyzes docs and generates project-context.md
+
+**Why AI analysis?** Deep comprehension of requirements, intelligent domain extraction, comprehensive context generation.
 
 ### Story-Driven App Creation
 This template uses a **3-step story-driven workflow** instead of direct scaffolding:
@@ -238,9 +262,13 @@ This template follows these principles:
 
 **If they're using the template:**
 - Guide them to appropriate documentation
-- Help them understand the 3-step story-driven workflow
-- Assist with `projects:init` (analyze docs) and `projects:add` (create story)
-- DO NOT scaffold apps directly — guide them through `/fill-story` → `/dev-story` workflow
+- Help them understand the AI-powered workflows
+- DO NOT scaffold apps directly — guide them through BMAD workflows
+
+**If they want to initialize the project:**
+1. Have them add documentation to `docs/project-materials/`
+2. Run `pnpm projects:init` to validate docs
+3. Run `/bmad:bmm:workflows:init-project` to generate project-context.md
 
 **If they want to add an app:**
 1. Run `pnpm projects:add` to create story
@@ -278,4 +306,5 @@ Before committing changes to this template:
 **Last Updated:** 2025-12-17
 **Template Version:** 1.0.0
 **BMAD Version:** 6.0.0-alpha.17
-**Workflow:** Story-driven (3-step: create → fill → implement)
+**Workflow:** AI-powered initialization + Story-driven development
+**Init Workflow:** `/bmad:bmm:workflows:init-project` (AI analyzes docs)

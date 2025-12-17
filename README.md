@@ -76,9 +76,34 @@ Interactive prompts will guide you:
 - App type (Node.js, Python, React, React Native, etc.)
 - Framework choice (Express/Fastify, Flask/FastAPI, Vite/Next.js, Expo, etc.)
 
-The scaffolded app will **follow YOUR conventions** from project-context.md!
+This creates a **story file** in `docs/stories/` with your app specifications.
 
-### 5. Start Building
+### 5. Fill the Story with Latest Versions
+
+In Claude Code, run:
+```bash
+/fill-story docs/stories/add-[app-name]-app.md
+```
+
+Claude will:
+- Web search for latest stable versions (e.g., Next.js 16.x, React 19.x)
+- Fill the story with complete technical design
+- Add acceptance criteria and implementation tasks
+
+### 6. Implement the App
+
+In Claude Code, run:
+```bash
+/bmad:bmm:workflows:dev-story docs/stories/add-[app-name]-app.md
+```
+
+Claude will:
+- Actually create the app structure
+- Install dependencies with latest versions
+- Configure everything per your project conventions
+- Follow the modular architecture from project-context.md
+
+### 7. Start Building
 
 ```bash
 pnpm dev          # Run all apps in development mode
@@ -142,14 +167,22 @@ Run `pnpm projects:init`:
 - Extracts project domain, tech stack, conventions
 - Generates `project-context.md` - a comprehensive guide tailored to YOUR project
 
-### 3. Apps Follow YOUR Patterns
+### 3. Story-Driven App Creation
 
-Run `pnpm projects:add`:
+Run `pnpm projects:add` to create a story, then use Claude Code workflows:
 
-- Reads YOUR `project-context.md`
-- Scaffolds apps using YOUR naming conventions
-- Includes YOUR preferred configs (TypeScript, ESLint, etc.)
-- Links to YOUR chosen shared packages
+**Step 1 - Create Story**: `pnpm projects:add` generates a story file with your requirements
+
+**Step 2 - Fill Story**: `/fill-story` command in Claude Code:
+- Web searches for latest framework versions
+- Fills story with technical design and tasks
+- Adapts to YOUR project-context.md conventions
+
+**Step 3 - Implement**: `/dev-story` workflow in Claude Code:
+- Actually creates the app following the story
+- Uses YOUR naming conventions and patterns
+- Includes YOUR preferred configs from project-context.md
+- Installs latest stable dependencies
 
 ---
 
@@ -306,8 +339,10 @@ _...and anything else you can imagine!_
 1. **Read the guides**: Start with `docs/project-guides/00-getting-started.md`
 2. **Replace examples**: Delete EXAMPLE files in `project-materials/` and add YOUR docs
 3. **Run init**: Execute `pnpm projects:init` to generate your project context
-4. **Add apps**: Use `pnpm projects:add` to scaffold your applications
-5. **Start building**: Follow BMAD workflows to develop features
+4. **Create app story**: Use `pnpm projects:add` to create a story file
+5. **Fill story**: Run `/fill-story docs/stories/[story-file].md` in Claude Code
+6. **Implement app**: Run `/bmad:bmm:workflows:dev-story docs/stories/[story-file].md` in Claude Code
+7. **Start building**: Follow BMAD workflows to develop features
 
 ---
 
@@ -347,4 +382,10 @@ This template follows the BMAD methodology for story-driven development and AI-a
 
 ---
 
-**Ready to ship fast? Start by adding YOUR documentation to `docs/project-materials/` and run `pnpm projects:init`!**
+**Ready to ship fast?**
+
+1. Add YOUR documentation to `docs/project-materials/`
+2. Run `pnpm projects:init`
+3. Run `pnpm projects:add` to create your first app story
+4. Use Claude Code to fill and implement: `/fill-story` → `/dev-story`
+5. Ship! 🚀

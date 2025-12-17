@@ -106,8 +106,9 @@ pnpm projects:add
 # Step 1: Create story
 pnpm projects:add
 
-# Step 2: Fill story with latest versions (in Claude Code)
+# Step 2: Fill story using BMAD agents (in Claude Code)
 /fill-story docs/stories/add-[app-name].md
+# This invokes: /bmad:bmm:workflows:fill-story
 
 # Step 3: Implement app (in Claude Code)
 /bmad:bmm:workflows:dev-story docs/stories/add-[app-name].md
@@ -148,13 +149,13 @@ This template uses **AI-powered documentation analysis** instead of simple keywo
 **Why AI analysis?** Deep comprehension of requirements, intelligent domain extraction, comprehensive context generation.
 
 ### Story-Driven App Creation
-This template uses a **3-step story-driven workflow** instead of direct scaffolding:
+This template uses a **3-step story-driven workflow** with BMAD agent intelligence:
 
-1. **Create Story** (`pnpm projects:add`): Generates story file with requirements
-2. **Fill Story** (`/fill-story`): Claude web searches for latest versions, fills technical design
-3. **Implement** (`/dev-story`): Claude actually creates the app following the story
+1. **Create Story** (`pnpm projects:add`): Generates story file with basic structure
+2. **Fill Story** (`/fill-story`): BMAD agents analyze project docs, web search for latest versions, generate comprehensive content
+3. **Implement** (`/dev-story`): BMAD dev workflow implements the app following the story
 
-**Why stories?** More flexible, uses latest versions automatically, adapts to project context better than static scaffolding.
+**Why BMAD agents?** Deep understanding of your project, intelligent content generation, latest versions automatically, adapts to your specific context and conventions.
 
 ---
 

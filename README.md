@@ -85,17 +85,20 @@ Interactive prompts will guide you:
 
 This creates a **story file** in `docs/stories/` with your app specifications.
 
-### 5. Fill the Story with Latest Versions
+### 5. Fill the Story with AI-Powered Analysis
 
 In Claude Code, run:
 ```bash
 /fill-story docs/stories/add-[app-name]-app.md
 ```
 
-Claude will:
-- Web search for latest stable versions (e.g., Next.js 16.x, React 19.x)
-- Fill the story with complete technical design
-- Add acceptance criteria and implementation tasks
+BMAD agents will:
+- Analyze your project documentation with deep comprehension
+- Understand your domain, tech stack, and conventions
+- Web search for latest stable versions (e.g., Next.js 15.x, React 19.x)
+- Generate comprehensive technical design with architecture patterns
+- Create detailed acceptance criteria and phased implementation tasks
+- Include testing strategy, dependencies, and dev notes
 
 ### 6. Implement the App
 

@@ -1,230 +1,154 @@
 # Fill Story Command
 
-Fill in a story file with detailed content based on the overview/brief description and project documentation.
+Fill in a story file with detailed content using AI-powered analysis of project documentation and intelligent content generation via BMAD agents.
 
-## Instructions
-
-1. **Read the story file** at: $ARGUMENTS
-2. **Extract story details** from the file header (ID, title, overview, app)
-3. **Read project context** to understand project conventions and architecture:
-   - `docs/project-context.md` - Project conventions, tech stack, coding standards
-
-4. **Determine project scope** from the file path:
-   - `apps/[app-name]/docs/todos/` → Specific app context
-   - `packages/[package-name]/docs/todos/` → Shared package context
-   - `docs/todos/` → Cross-project scope
-
-5. **Read relevant documentation** (if available):
-   - Project README files
-   - App-specific documentation in `apps/[app-name]/docs/`
-   - Package documentation in `packages/[package-name]/docs/`
-   - Architecture documentation in `docs/project-materials/architecture/`
-   - Requirements in `docs/project-materials/requirements/`
-   - Design specs in `docs/project-materials/design/`
-
-6. **Web search for latest versions** (REQUIRED):
-   - Search for the latest stable version of frameworks/libraries mentioned
-   - Example: "Next.js latest version 2025" → Use Next.js 15.x
-   - Example: "React latest stable 2025" → Use React 19.x
-   - Include version info in Technical Design section
-
-7. **Generate complete content** for all sections:
-
-   ### User Story
-   - Format: "As a [user role], I want to [action] so that [benefit]"
-   - Derive role from project context and requirements
-
-   ### Acceptance Criteria
-   - Specific, testable checkboxes
-   - Include edge cases and error handling
-   - Reference project conventions from project-context.md
-   - API response validation
-   - Follow coding conventions (kebab-case files, etc.)
-
-   ### Technical Design
-
-   **Follow modular architecture patterns:**
-
-   **For API stories (Node.js/Python):**
-   - Follow MVC pattern: routes/ → controllers/ → services/
-   - API endpoints with clear naming
-   - Request/response schemas with type safety
-   - Database operations (follow project's DB choice)
-   - Error handling patterns
-   - Authentication/authorization approach
-   - Use latest framework versions from web search
-
-   **For Frontend stories (React/Next.js):**
-   - Component structure (follow project conventions)
-   - API integration patterns
-   - State management (React hooks, Context, etc.)
-   - Form validation with type safety
-   - UI component libraries (if project uses them)
-   - Responsive design considerations
-   - Use latest framework versions from web search
-
-   **For Mobile stories (React Native/Expo):**
-   - Component organization
-   - Navigation patterns
-   - State management
-   - API integration
-   - Platform-specific considerations
-   - Use latest framework versions from web search
-
-   ### Implementation Checklist
-
-   **Phase 1: Setup**
-   - Create necessary files following project structure from project-context.md
-   - Install required dependencies (use LATEST versions)
-   - Set up configuration
-
-   **Phase 2: Implementation**
-   - Implement core functionality
-   - Follow modular architecture:
-     - Backend: controllers/ + services/ + routes/
-     - Frontend: components/ + hooks/ + utils/
-   - Use project's shared packages/utilities
-
-   **Phase 3: Testing & Validation**
-   - Run `pnpm typecheck` (if TypeScript project)
-   - Run `pnpm lint` (if linting configured)
-   - Manual testing checklist
-   - Test all acceptance criteria
-
-   **Phase 4: Code Review** (ALWAYS include)
-   - Run `/bmad:bmm:workflows:code-review` workflow
-   - Address any issues found
-   - Re-run checks after fixes
-
-   ### Dependencies
-   - List prerequisite stories
-   - List required packages (WITH LATEST VERSIONS)
-   - List external services
-
-   ### Testing
-   - Unit tests (when applicable)
-   - Integration tests
-   - Manual testing checklist
-   - Edge cases
-
-   ### Notes
-   - Edge cases to consider
-   - Implementation considerations
-   - Security considerations
-   - Performance considerations
-   - Future enhancements
-
-8. **Update the story file** with generated content
-9. **Remove placeholders** and ensure all sections are filled
-
-## Key Guidelines
-
-### Use Project Context
-- Always reference `docs/project-context.md` for:
-  - Coding conventions (kebab-case, camelCase, etc.)
-  - Architecture patterns
-  - Tech stack choices
-  - Testing requirements
-
-### Latest Versions (CRITICAL)
-- **ALWAYS web search for latest stable versions**
-- Include version numbers in dependencies
-- Use 2025 in search queries for current info
-- Examples:
-  - "Next.js 15.0" (not 14.x)
-  - "React 19" (not 18.x)
-  - "TypeScript 5.3+" (latest)
-  - "Express 4.18+" (latest)
-
-### Modular Architecture
-- **Backend pattern**: routes → controllers → services
-  - Routes: Thin layer, just endpoint definitions
-  - Controllers: Request/response handling, validation
-  - Services: Business logic, reusable functions
-
-- **Frontend pattern**: components → hooks → utils
-  - Components: Presentation, composition
-  - Hooks: Logic, state management
-  - Utils: Helper functions
-
-### File Naming
-- Follow project conventions from project-context.md
-- Default: kebab-case for all files
-- Examples:
-  - `user-controller.ts`
-  - `auth-service.ts`
-  - `user-profile.tsx`
-
-## Output Format
-
-After filling the story, provide a summary:
-
+**IMPORTANT:** When this command is invoked, immediately run:
 ```
-✅ Story filled successfully!
-
-📋 Generated:
-- User Story (for [role])
-- [N] Acceptance Criteria
-- Technical Design ([API/Frontend/Mobile] scope)
-- [N] Implementation Tasks
-- Testing Requirements
-- Dependencies & Notes
-
-🔍 Web Search Results:
-- [Framework]: Latest version X.Y.Z
-- [Library]: Latest version A.B.C
-
-📚 References Used:
-- docs/project-context.md
-- [Other relevant docs]
-
-🎯 Story ready for development!
-
-Next steps:
-1. Review the filled story
-2. Make any adjustments if needed
-3. Run `/bmad:bmm:workflows:dev-story [file]` to start implementation
-
-Or type 'go' to start development immediately.
+/bmad:bmm:workflows:fill-story $ARGUMENTS
 ```
 
-## Example Workflow
+Do not process the instructions below - they are for user reference only. The workflow handles everything.
 
-### Example: Filling an "Add App" Story
+---
 
-**Given story file**: `docs/todos/add-api-app.md`
+## Quick Usage
 
-**Workflow:**
+This command uses the BMAD fill-story workflow for intelligent story generation:
 
-1. **Read** the story file:
-   - Title: "Create Express API App"
-   - Overview: "Scaffold new Express API with TypeScript"
-   - App: api
+```bash
+/fill-story [story-file-path]
+```
 
-2. **Read project context**:
-   - Tech stack: Node.js, Express, TypeScript
-   - Conventions: kebab-case, MVC pattern
-   - Port: 3000
+Example:
+```bash
+/fill-story docs/stories/add-api-app.md
+```
 
-3. **Web search**:
-   - "Express latest version 2025" → 4.18.2
-   - "TypeScript latest 2025" → 5.3.3
-   - "Node.js LTS 2025" → 20.x
+## What This Does
 
-4. **Generate content**:
-   - User Story: "As a developer, I want to scaffold an Express API..."
-   - Acceptance Criteria:
-     - Create modular structure (routes/, controllers/, services/)
-     - Use Express 4.18+ and TypeScript 5.3+
-     - Include health check endpoint
-     - Follow project coding conventions
-   - Technical Design:
-     - Structure with MVC pattern
-     - Latest versions: Express 4.18.2, TypeScript 5.3.3
-     - Config, middleware, utils folders
-   - Implementation: Step-by-step tasks
-   - Testing: Verify server starts, health check works
+The BMAD workflow will:
 
-5. **Write to file** and confirm ready for development
+1. **Analyze Project Context** - Uses BMAD analyst agent to deeply understand your project
+   - Reads `docs/project-context.md`
+   - Analyzes all documentation in `docs/project-materials/`
+   - Understands domain, tech stack, and architecture patterns
 
-This ensures the story is filled with current best practices and latest stable versions.
+2. **Web Search Latest Versions** - Finds current stable versions
+   - Searches for latest framework versions (React, Next.js, Express, etc.)
+   - Identifies best practices for 2025
+   - Ensures story uses modern, up-to-date technologies
+
+3. **Generate Comprehensive Content** - Uses BMAD master agent to create:
+   - User Story (properly formatted with role/action/benefit)
+   - Acceptance Criteria (5-8 specific, testable criteria)
+   - Technical Design (architecture, file structure, API design)
+   - Implementation Checklist (phased tasks with checkboxes)
+   - Testing Strategy (unit, integration, manual tests)
+   - Dependencies (with versions)
+   - Dev Notes (considerations, edge cases, security)
+
+4. **Update Story File** - Writes comprehensive content back to the file
+
+## How to Use
+
+Simply run this command with your story file path:
+
+```bash
+/fill-story docs/stories/your-story.md
+```
+
+The command will automatically invoke the BMAD workflow:
+
+```bash
+/bmad:bmm:workflows:fill-story docs/stories/your-story.md
+```
+
+## Benefits of BMAD Agent Analysis
+
+**Vs. Simple Template Filling:**
+- ✅ **Deep Understanding** - Analyzes project docs with AI comprehension
+- ✅ **Context-Aware** - Understands your domain and architecture
+- ✅ **Latest Versions** - Automatically searches for current stable versions
+- ✅ **Best Practices** - Applies 2025 patterns and approaches
+- ✅ **Comprehensive** - Generates all sections with rich detail
+- ✅ **Intelligent** - Adapts to your specific tech stack and conventions
+
+## What Gets Generated
+
+The BMAD agents will create:
+
+### User Story
+- Properly formatted: "As a [role], I want to [action] so that [benefit]"
+- Role derived from your project context
+
+### Acceptance Criteria (5-8 criteria)
+- Specific and testable
+- Includes edge cases and error handling
+- Follows your coding conventions
+- Security and performance considerations
+
+### Technical Design
+- Architecture overview following your patterns
+- Technology stack with latest versions
+- File structure (following your conventions)
+- API design (if applicable)
+- Data models (if applicable)
+- Component structure (if frontend/mobile)
+- Integration points
+- Error handling strategy
+- Security considerations
+
+### Implementation Checklist
+- Phase 1: Setup & Configuration
+- Phase 2: Core Implementation
+- Phase 3: Integration
+- Phase 4: Testing
+- Phase 5: Quality & Review
+
+### Testing Strategy
+- Unit tests
+- Integration tests
+- Manual testing checklist
+- Edge cases to test
+
+### Dependencies
+- Prerequisite stories
+- Required packages with versions
+- External services
+- Environment variables
+
+### Dev Notes
+- Implementation considerations
+- Edge cases
+- Security notes
+- Future enhancements
+
+## After Filling
+
+Once the story is filled, you can:
+
+1. **Review** - Check the generated content
+2. **Adjust** - Make any refinements needed
+3. **Develop** - Run `/bmad:bmm:workflows:dev-story [story-file]` to implement
+
+Or type **'go'** to start development immediately!
+
+## Example
+
+```bash
+# Fill a story
+/fill-story docs/stories/add-user-auth.md
+
+# The workflow analyzes your project, searches for latest versions,
+# and generates comprehensive story content
+
+# Then develop it
+/bmad:bmm:workflows:dev-story docs/stories/add-user-auth.md
+```
+
+---
+
+**Pro Tip:** For best results, ensure you have:
+- `docs/project-context.md` generated (run `/bmad:bmm:workflows:init-project`)
+- Documentation in `docs/project-materials/`
+- Clear story overview/brief in the story file
